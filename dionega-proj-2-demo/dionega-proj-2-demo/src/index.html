@@ -1,0 +1,204 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dionega Healthcare Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js CDN for data visualization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <h1>Dionega Healthcare Analytics</h1>
+                <p>Empowering Care Through Precise Vital Analysis</p>
+            </div>
+            <div class="date-time">
+                <div id="current-date">Loading date...</div>
+                <div id="current-time">Loading time...</div>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#welcome" class="nav-link active-nav" data-page="welcome">Welcome</a></li>
+                <li><a href="#dashboard" class="nav-link" data-page="dashboard">Live Dashboard</a></li>
+                <li><a href="#encode" class="nav-link" data-page="encode">Data Encoding</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <!-- Welcome Page -->
+        <section id="welcome" class="page active">
+            <h2 class="page-title">Welcome to Dionega Healthcare Analytics</h2>
+            <div class="welcome-content">
+                <img src="https://via.placeholder.com/800x400" alt="Healthcare Analytics" class="welcome-image">
+                <div class="welcome-message">
+                    <p>Welcome to Dionega, your trusted resource for accurate and insightful vital sign interpretation. We're dedicated to empowering healthcare professionals with the knowledge they need to make informed decisions and provide optimal patient care.</p>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Vital Sign Analysis</h3>
+                        <p>Our platform provides real-time analysis of patient vital signs, helping you make informed clinical decisions quickly.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Data Visualization</h3>
+                        <p>Interactive charts and graphs make it easy to identify trends and patterns in patient health data.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Clinical Decision Support</h3>
+                        <p>Automated interpretation of vital signs based on established medical standards helps verify your clinical assessments.</p>
+                    </div>
+                </div>
+                <button class="btn" id="get-started-btn">Get Started</button>
+            </div>
+        </section>
+        
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="page">
+            <h2 class="page-title">Live Dashboard</h2>
+            <div id="dashboard-content">
+                <div id="no-data-message" class="hidden">
+                    <h3>No patient data available</h3>
+                    <p>Add patient data using the Data Encoding page to view analytics.</p>
+                    <button class="btn" id="go-to-encode-btn">Go to Data Encoding</button>
+                </div>
+                <div id="dashboard-data" class="hidden">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <h3>Vital Signs Overview</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="vitals-overview-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>Blood Pressure Distribution</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="bp-distribution-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>Cardiac Rate Analysis</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="cardiac-rate-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>Temperature Readings</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="temperature-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Patient Vital Signs</h3>
+                    <div class="table-container">
+                        <table id="patient-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Blood Pressure</th>
+                                    <th>Cardiac Rate</th>
+                                    <th>Pulse Rate</th>
+                                    <th>Respiratory Rate</th>
+                                    <th>Temperature</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patient-table-body">
+                                <!-- Patient data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Encoding Page -->
+        <section id="encode" class="page">
+            <h2 class="page-title">Data Encoding</h2>
+            <div id="alert-container"></div>
+            <form id="patient-form">
+                <div class="form-group">
+                    <label for="patient-name">Patient Name*</label>
+                    <input type="text" id="patient-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="blood-pressure-systolic">Blood Pressure - Systolic (mmHg)*</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="blood-pressure-systolic" placeholder="Systolic" required>
+                        <span class="input-icon">mmHg</span>
+                    </div>
+                    <small class="info-text">Normal: Less than 120 mmHg</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="blood-pressure-diastolic">Blood Pressure - Diastolic (mmHg)*</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="blood-pressure-diastolic" placeholder="Diastolic" required>
+                        <span class="input-icon">mmHg</span>
+                    </div>
+                    <small class="info-text">Normal: Less than 80 mmHg</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cardiac-rate">Cardiac Rate (bpm)*</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="cardiac-rate" required>
+                        <span class="input-icon">bpm</span>
+                    </div>
+                    <small class="info-text">Normal: 60-100 bpm</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pulse-rate">Pulse Rate (bpm)*</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="pulse-rate" required>
+                        <span class="input-icon">bpm</span>
+                    </div>
+                    <small class="info-text">Normal: 60-100 bpm</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="respiratory-rate">Respiratory Rate (breaths/min)*</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="respiratory-rate" required>
+                        <span class="input-icon">bpm</span>
+                    </div>
+                    <small class="info-text">Normal: 12-20 breaths/min</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="temperature">Temperature (°C)*</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="temperature" step="0.1" required>
+                        <span class="input-icon">°C</span>
+                    </div>
+                    <small class="info-text">Normal: 36.5-37.5 °C</small>
+                </div>
+                
+                <button type="submit" class="btn">Save Patient Data</button>
+            </form>
+            
+            <div class="interpretation-result hidden" id="interpretation-result">
+                <h3>Vital Signs Interpretation</h3>
+                <div id="interpretation-content"></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dionega Healthcare Analytics | Developed for Nursing Informatics Course</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
